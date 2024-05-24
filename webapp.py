@@ -5,7 +5,7 @@ from io import BytesIO
 
 
 def generate_openai(word: str) -> BytesIO:
-    prompt = f"Graphic art of a single new Pokémon named {word} in the official Pokémon cartoon style, 2D, flat colors, isolated on pure white background, no additional objects"
+    prompt = f"A single new Pokémon, 2D cartoon Pokémon style, flat colors, isolated on pure white background, without any textual elements or additional objects"
 
     response = CLIENT.images.generate(
         model="dall-e-3",
@@ -21,7 +21,7 @@ def generate_openai(word: str) -> BytesIO:
     return image_bytes
 
 def edit_openai(word: str) -> BytesIO:
-    prompt = f"Graphic art of a single new Pokémon named {word}, 2D, flat colors, isolated on white background, no additional objects"
+    prompt = f"Graphic art of a single new Pokémon called {word}, 2D, flat colors, isolated on white background"
 
     response = CLIENT.images.edit(
         model="dall-e-2",
