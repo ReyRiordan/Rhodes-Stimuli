@@ -20,7 +20,7 @@ def generate_openai(word: str, client: OpenAI) -> BytesIO:
     return image_bytes
 
 
-def edit_openai(word: str, client: OpenAI) -> BytesIO:
+def edit_openai(word: str, n, client: OpenAI) -> list[str]:
     prompt = f"Graphic art of a single new Pokémon called {word}, 2D, flat colors, isolated on white background"
 
     response = client.images.edit(
@@ -29,10 +29,13 @@ def edit_openai(word: str, client: OpenAI) -> BytesIO:
         mask=open("mask.png", "rb"),
         prompt=prompt,
         size="1024x1024",
-        n=1
+        n=n
     )
 
-    image = requests.get(response.data[0].url)
-    image_bytes = BytesIO(image.content)
+    images = []
+    for data in response.data:
+        image = requests.get(data.url)
+        bytes = BytesIO(image.content)
+        images.append(bytes)
 
-    return image_bytes
+    return images
