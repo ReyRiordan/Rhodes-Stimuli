@@ -126,8 +126,8 @@ def generate_DE2(word: str, n, client: OpenAI) -> list[BytesIO]:
         model="dall-e-2",
         prompt=prompt,
         n=n,
-        image=open("white.png", "rb"),
-        mask=open("mask.png", "rb"),
+        image=open("assets/white.png", "rb"),
+        mask=open("assets/mask.png", "rb"),
         size="1024x1024"
     )
 
