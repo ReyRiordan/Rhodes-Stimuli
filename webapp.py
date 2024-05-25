@@ -94,8 +94,8 @@ if 'images' in st.session_state:
         image_layout[0].image(image=img,
                               output_format="PNG")
         
-        # for i in range(4):
-        #     image_layout[2].markdown("#")
+        for i in range(2):
+            image_layout[2].markdown("#")
         image_layout[2].download_button(label="Download",
                                         data=img,
                                         file_name=st.session_state['word']+".png",
