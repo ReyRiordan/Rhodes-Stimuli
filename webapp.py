@@ -16,6 +16,8 @@ st.session_state['word'] = st.text_input("Word:")
 if st.session_state['word']:
     st.divider()
 
+    ### AUDIO GENERATION ###
+
     if st.columns(3)[1].button("Generate Audio", type="primary", use_container_width=True) and st.session_state['word']:
         st.session_state['audio'] = audio.generate_openai(st.session_state['word'], client)
     
@@ -35,10 +37,38 @@ if st.session_state['word']:
         
     st.divider()
 
-    num_images = st.select_slider(label="Number of images:", options=[i+1 for i in range(10)])
+    ### IMAGE GENERATION ###
 
-    if st.columns(3)[1].button("Generate Image(s)", type="primary", use_container_width=True):
-        st.session_state['images'] = image.edit_openai(st.session_state['word'], num_images, client)
+    st.session_state['image_settings'] = st.selectbox(label="Image generation method:",
+                                                      options=["Stable Diffusion 3.0",
+                                                               "Stable Diffusion 3.0 Turbo",
+                                                               "Stable Image Core",
+                                                               "Dall-E 2",
+                                                               "Dall-E 3",])
+    
+    if st.session_state['image_settings'] == "Dall-E 2":
+        num_images = st.select_slider(label="Number of images:", options=[i+1 for i in range(10)])
+        if st.columns(3)[1].button("Generate Image(s)", type="primary", use_container_width=True):
+            st.session_state['images'] = image.generate_DE2(word=st.session_state['word'],
+                                                            n=num_images,
+                                                            client=client)
+    
+    elif st.session_state['image_settings'] == "Dall-E 3":
+        if st.columns(3)[1].button("Generate Image", type="primary", use_container_width=True):
+            st.session_state['images'] = image.generate_DE3(word=st.session_state['word'],
+                                                            client=client)
+    
+    elif st.session_state['image_settings'] == "Stable Diffusion 3.0":
+        if st.columns(3)[1].button("Generate Image", type="primary", use_container_width=True):
+            st.session_state['images'] = image.generate_SD3(word=st.session_state['word'])
+    
+    elif st.session_state['image_settings'] == "Stable Diffusion 3.0 Turbo":
+        if st.columns(3)[1].button("Generate Image", type="primary", use_container_width=True):
+            st.session_state['images'] = image.generate_SD3T(word=st.session_state['word'])
+    
+    elif st.session_state['image_settings'] == "Stable Image Core":
+        if st.columns(3)[1].button("Generate Image", type="primary", use_container_width=True):
+            st.session_state['images'] = image.generate_SIC(word=st.session_state['word'])
 
     if 'images' in st.session_state:
         for index, img in enumerate(st.session_state['images']):
