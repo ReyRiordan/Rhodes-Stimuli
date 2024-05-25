@@ -24,10 +24,8 @@ if st.session_state['word']:
     if 'audio' in st.session_state:
         audio_layout = st.columns(4)
 
-        audio_layout[1].button(label="Play",
-                on_click=audio.play,
-                args=[st.session_state['audio']],
-                use_container_width=True)
+        audio_layout[1].audio(data=st.session_state['audio'],
+                              format="audio/mpeg")
         
         audio_layout[2].download_button(label="Download",
                         data=st.session_state['audio'],
