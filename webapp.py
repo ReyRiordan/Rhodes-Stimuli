@@ -63,7 +63,7 @@ client = OpenAI()
 #         st.session_state['audio'] = audio.generate_google(st.session_state['word'])
 
 if st.columns(3)[1].button("Generate Audio", type="primary", use_container_width=True, disabled=disable_buttons):
-        st.session_state['audio'] = audio.generate_openai(st.session_state['word'], client)
+        st.session_state['audio'] = audio.generate_openai(st.session_state['word'][0], client)
 
 if 'audio' in st.session_state:
     audio_layout = st.columns(4)
