@@ -40,8 +40,6 @@ if 'word' in st.session_state and st.session_state['word']:
         st.header("Plural: " + st.session_state['words'][1])
         st.header("Violation: " + st.session_state['words'][2])
         st.session_state['word'] = st.session_state['words'][0]
-    elif 'word' in st.session_state:
-        st.header("Word: " + st.session_state['word'])
     disable_buttons = False
 
 
