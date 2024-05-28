@@ -17,3 +17,45 @@ def generate_basic() -> str:
             noun += random.choice(vowels)
     
     return noun
+
+
+def generate_harmonic() -> list[str]:
+    vowels = 'eiou'
+    consonants = 'pbtdgknmsz'
+    root_dict = {'front': 'ei', 'back': 'ou'}
+    suffix_dict = {'front': 'i', 'back': 'u'}
+
+    type = random.choice(['front', 'back'])
+
+    c1 = random.choice(consonants)
+    v1 = random.choice(root_dict[type])
+    c2 = random.choice(consonants)
+    v2 = random.choice(root_dict[type])
+    root = c1 + v1 + c2 + v2
+
+    plural = root + 'm' + suffix_dict[type]
+
+    violation = root + 'm' + suffix_dict['back'] if type == 'front' else root + 'm' + suffix_dict['front']
+
+    return [root, plural, violation]
+
+
+def generate_firstlast() -> list[str]:
+    vowels = 'eiou'
+    consonants = 'pbtdgknmsz'
+    vowel_dic = {'front': 'ei', 'back': 'ou'}
+    suffix_dict = {'front': 'i', 'back': 'u'}
+
+    type = random.choice(['front', 'back'])
+
+    c1 = random.choice(consonants)
+    v1 = random.choice(vowel_dic[type])
+    c2 = random.choice(consonants)
+    v2 = random.choice(vowel_dic['back']) if type == 'front' else random.choice(vowel_dic['front'])
+    root = c1 + v1 + c2 + v2
+
+    plural = root + 'm' + suffix_dict[type]
+
+    violation = root + 'm' + suffix_dict['back'] if type == 'front' else root + 'm' + suffix_dict['front']
+
+    return [root, plural, violation]

@@ -15,18 +15,32 @@ st.title("Generate Experimental Stimuli")
 disable_buttons = True
 
 st.session_state['word_settings'] = st.selectbox(label="Word generation method:",
-                                                 options=["Basic",
+                                                 options=["Harmonic",
+                                                          "First/Last",
                                                           "Manual"])
 
 if st.session_state['word_settings'] == "Manual":
     st.session_state['word'] = st.text_input("Enter word:")
 
-elif st.session_state['word_settings'] == "Basic":
+# elif st.session_state['word_settings'] == "Basic":
+#     if st.columns(3)[1].button("Generate Word", type="primary", use_container_width=True):
+#         st.session_state['word'] = word.generate_basic()
+
+elif st.session_state['word_settings'] == "Harmonic":
     if st.columns(3)[1].button("Generate Word", type="primary", use_container_width=True):
-        st.session_state['word'] = word.generate_basic()
+        st.session_state['word'] = word.generate_harmonic()
+
+elif st.session_state['word_settings'] == "First/Last":
+    if st.columns(3)[1].button("Generate Word", type="primary", use_container_width=True):
+        st.session_state['word'] = word.generate_firstlast()
 
 if 'word' in st.session_state and st.session_state['word']:
-    st.header(st.session_state['word'])
+    if isinstance(st.session_state['word'], list):
+        st.header("Root: " + st.session_state['word'][0])
+        st.header("Plural: " + st.session_state['word'][1])
+        st.header("Violation: " + st.session_state['word'][2])
+    else:
+        st.header("Word: " + st.session_state['word'])
     disable_buttons = False
 
 
@@ -36,8 +50,20 @@ st.divider()
 
 client = OpenAI()
 
+# st.session_state['audio_settings'] = st.selectbox(label="Audio generation method:",
+#                                                  options=["OpenAI",
+#                                                           "Google"])
+
+# if st.session_state['audio_settings'] == "OpenAI":
+#     if st.columns(3)[1].button("Generate Audio", type="primary", use_container_width=True, disabled=disable_buttons):
+#         st.session_state['audio'] = audio.generate_openai(st.session_state['word'], client)
+
+# if st.session_state['audio_settings'] == "Google":
+#     if st.columns(3)[1].button("Generate Audio", type="primary", use_container_width=True, disabled=disable_buttons):
+#         st.session_state['audio'] = audio.generate_google(st.session_state['word'])
+
 if st.columns(3)[1].button("Generate Audio", type="primary", use_container_width=True, disabled=disable_buttons):
-    st.session_state['audio'] = audio.generate_openai(st.session_state['word'], client)
+        st.session_state['audio'] = audio.generate_openai(st.session_state['word'], client)
 
 if 'audio' in st.session_state:
     audio_layout = st.columns(4)

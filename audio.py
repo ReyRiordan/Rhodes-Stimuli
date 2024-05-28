@@ -1,5 +1,6 @@
 import streamlit as st
 from openai import OpenAI
+from google.cloud import texttospeech
 from io import BytesIO
 import base64
 
@@ -22,4 +23,20 @@ def generate_openai(word: str, client: OpenAI) -> BytesIO:
 
     audio_bytes = BytesIO(response.content)
 
+    return audio_bytes
+
+
+def generate_google(word: str) -> BytesIO:
+    client = texttospeech.TextToSpeechClient()
+    synthesis_input = texttospeech.SynthesisInput(text=word)
+    voice = texttospeech.VoiceSelectionParams(language_code="en-US",
+                                              ssml_gender=texttospeech.SsmlVoiceGender.NEUTRAL)
+    audio_config = texttospeech.AudioConfig(audio_encoding=texttospeech.AudioEncoding.MP3)
+
+    response = client.synthesize_speech(input=synthesis_input,
+                                        voice=voice,
+                                        audio_config=audio_config)
+
+    audio_bytes = BytesIO(response.audio_content)
+    
     return audio_bytes
