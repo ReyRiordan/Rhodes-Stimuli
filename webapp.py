@@ -28,17 +28,18 @@ if st.session_state['word_settings'] == "Manual":
 
 elif st.session_state['word_settings'] == "Harmonic":
     if st.columns(3)[1].button("Generate Word", type="primary", use_container_width=True):
-        st.session_state['word'] = word.generate_harmonic()
+        st.session_state['words'] = word.generate_harmonic()
 
 elif st.session_state['word_settings'] == "First/Last":
     if st.columns(3)[1].button("Generate Word", type="primary", use_container_width=True):
-        st.session_state['word'] = word.generate_firstlast()
+        st.session_state['words'] = word.generate_firstlast()
 
 if 'word' in st.session_state and st.session_state['word']:
-    if isinstance(st.session_state['word'], list):
-        st.header("Root: " + st.session_state['word'][0])
-        st.header("Plural: " + st.session_state['word'][1])
-        st.header("Violation: " + st.session_state['word'][2])
+    if 'words' in st.session_state:
+        st.header("Root: " + st.session_state['words'][0])
+        st.header("Plural: " + st.session_state['words'][1])
+        st.header("Violation: " + st.session_state['words'][2])
+        st.session_state['word'] = st.session_state['words'][0]
     else:
         st.header("Word: " + st.session_state['word'])
     disable_buttons = False
@@ -63,7 +64,7 @@ client = OpenAI()
 #         st.session_state['audio'] = audio.generate_google(st.session_state['word'])
 
 if st.columns(3)[1].button("Generate Audio", type="primary", use_container_width=True, disabled=disable_buttons):
-        st.session_state['audio'] = audio.generate_openai(st.session_state['word'][0], client)
+        st.session_state['audio'] = audio.generate_openai(st.session_state['word'], client)
 
 if 'audio' in st.session_state:
     audio_layout = st.columns(4)
