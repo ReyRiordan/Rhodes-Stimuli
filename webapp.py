@@ -34,12 +34,13 @@ elif st.session_state['word_settings'] == "First/Last":
     if st.columns(3)[1].button("Generate Word", type="primary", use_container_width=True):
         st.session_state['words'] = word.generate_firstlast()
 
-if 'word' in st.session_state and st.session_state['word']:
-    if 'words' in st.session_state:
-        st.header("Root: " + st.session_state['words'][0])
-        st.header("Plural: " + st.session_state['words'][1])
-        st.header("Violation: " + st.session_state['words'][2])
-        st.session_state['word'] = st.session_state['words'][0]
+if 'words' in st.session_state and st.session_state['words']:
+    st.header("Root: " + st.session_state['words'][0])
+    st.header("Plural: " + st.session_state['words'][1])
+    st.header("Violation: " + st.session_state['words'][2])
+    st.session_state['word'] = st.session_state['words'][0]
+    disable_buttons = False
+elif 'word' in st.session_state and st.session_state['word']:
     disable_buttons = False
 
 
