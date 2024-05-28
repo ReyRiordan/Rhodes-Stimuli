@@ -21,6 +21,7 @@ st.session_state['word_settings'] = st.selectbox(label="Word generation method:"
 
 if st.session_state['word_settings'] == "Manual":
     st.session_state['word'] = st.text_input("Enter word:")
+    st.session_state['words'] = None
 
 # elif st.session_state['word_settings'] == "Basic":
 #     if st.columns(3)[1].button("Generate Word", type="primary", use_container_width=True):
