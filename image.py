@@ -71,7 +71,7 @@ def generate_SD3T(word: str) -> list[BytesIO]:
 
 def generate_SD3(word: str) -> list[BytesIO]:
     api_key = os.getenv("STABILITY_API_KEY")
-    prompt = f"A single living thing called a {word} in cartoon pokemon art style, 2-dimensional, isolated on pure white background. Inspired by gopher pronghorn snowy owl fish."
+    prompt = f"A single living thing called a {word} in cartoon pokemon art style, 2-dimensional, isolated on pure white background. Inspired by shrew alligator toad capybara dromedary."
 
     response = requests.post(
         f"https://api.stability.ai/v2beta/stable-image/generate/sd3",
