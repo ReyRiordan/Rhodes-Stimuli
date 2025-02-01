@@ -6,11 +6,11 @@ import numpy as np
 folder_path = r'C:\Users\mattp\Downloads\French male Mathieu-20250122T000241Z-001\French male Mathieu'
 
 # Specify the duration of the silent padding (in seconds)
-silent_duration_s = .5  
+silent_duration_s = .25  
 
 # Go through all files in the folder
 for filename in os.listdir(folder_path):
-    if filename.endswith("_root.mp3"):
+    if filename.endswith("_onset.mp3"):
         # Full path to the .wav file
         file_path = os.path.join(folder_path, filename)
         
