@@ -14,28 +14,34 @@ for filename in os.listdir(folder_path):
         # Full path to the .wav file
         file_path = os.path.join(folder_path, filename)
         
-        # Open the .wav file
-        with wave.open(file_path, 'rb') as audio_file:
-            # Get the parameters from the original file
-            params = audio_file.getparams()
-            num_channels = params.nchannels
-            sample_width = params.sampwidth
-            frame_rate = params.framerate
-            num_frames = params.nframes
+        # # Open the .wav file
+        # with wave.open(file_path, 'rb') as audio_file:
+        #     # Get the parameters from the original file
+        #     params = audio_file.getparams()
+        #     num_channels = params.nchannels
+        #     sample_width = params.sampwidth
+        #     frame_rate = params.framerate
+        #     num_frames = params.nframes
             
-            # Read the audio data
-            audio_data = audio_file.readframes(num_frames)
+        #     # Read the audio data
+        #     audio_data = audio_file.readframes(num_frames)
         
-        # Create silence (all zeroes) for the padding
-        silence = np.zeros(int(frame_rate * silent_duration_s) * num_channels * sample_width, dtype=np.int16)
+        # # Create silence (all zeroes) for the padding
+        # silence = np.zeros(int(frame_rate * silent_duration_s) * num_channels * sample_width, dtype=np.int16)
 
-        # Combine the silence with the original audio data
-        padded_audio = silence.tobytes() + audio_data
+        # # Combine the silence with the original audio data
+        # padded_audio = silence.tobytes() + audio_data
         
-        # Save the new padded file
-        output_path = os.path.join(folder_path, "padded", f"padded_{filename}")
-        with wave.open(output_path, 'wb') as output_file:
-            output_file.setparams(params)
-            output_file.writeframes(padded_audio)
+        # # Save the new padded file
+        # output_path = os.path.join(folder_path, "padded", f"padded_{filename}")
+        # with wave.open(output_path, 'wb') as output_file:
+        #     output_file.setparams(params)
+        #     output_file.writeframes(padded_audio)
+
+
+        # Rename the file
+        new_filename = f"{filename[:-10]}_suffix.mp3"
+        new_path = os.path.join(folder_path, new_filename)
+        os.rename(file_path, new_path)
 
         print(f"Processed: {filename}")
